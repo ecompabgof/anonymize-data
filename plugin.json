@@ -1,0 +1,9 @@
+{
+  "name": "anonymize-data",
+  "version": "2.0.0",
+  "description": "Anonymise local PDF/Image/XLSX/CSV/DOCX/PPTX/TXT avant Claude (RGPD). Detect @path.ext, run OCR + Presidio NER local, inject anonymized text into prompt.",
+  "author": "Pablo Goffinet",
+  "hooks": {
+    "UserPromptSubmit": "hooks/pre-prompt.sh"
+  }
+}

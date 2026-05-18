@@ -1,0 +1,45 @@
+type: xlsx
+description: Journal de paie / livre de paie (colonnes par salarié)
+sensitive_columns:
+  - nom
+  - prenom
+  - prénom
+  - nom complet
+  - nom_complet
+  - fullname
+  - name
+  - adresse
+  - address
+  - email
+  - mail
+  - telephone
+  - téléphone
+  - tel
+  - phone
+  - n securite sociale
+  - n_securite_sociale
+  - nir
+  - numero ss
+  - iban
+  - rib
+  - bic
+  - date naissance
+  - date_naissance
+  - birth
+keep_columns:
+  - matricule
+  - poste
+  - departement
+  - département
+  - salaire brut
+  - salaire_brut
+  - salaire net
+  - salaire_net
+  - net imposable
+  - cotisations
+  - charges
+  - heures
+  - mois
+  - annee
+  - année
+strategy: remove

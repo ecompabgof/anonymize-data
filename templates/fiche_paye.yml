@@ -1,0 +1,36 @@
+type: pdf
+description: Bulletin de paie / fiche de paie FR
+sensitive_fields:
+  - nom_complet
+  - prenom
+  - nom
+  - adresse_perso
+  - n_securite_sociale
+  - nir
+  - iban
+  - rib
+  - date_naissance
+  - email
+  - telephone
+  - numero_cni
+keep_fields:
+  - matricule
+  - poste
+  - emploi
+  - statut
+  - date_entree
+  - anciennete
+  - salaire_brut
+  - salaire_net
+  - net_imposable
+  - cotisations
+  - heures
+  - conges_payes
+  - rtt
+  - urssaf
+  - mois
+  - annee
+notes: |
+  Sur fiche paye FR, masquer impérativement nom employé, adresse perso,
+  N° sécu sociale, IBAN, date naissance. Garder matricule (anonyme),
+  poste, ancienneté, montants.
