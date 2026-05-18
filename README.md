@@ -14,11 +14,22 @@ NOM, EMAIL, TÉLÉPHONE (FR), IBAN, ADRESSE (FR), CP+VILLE (FR), NIR (sécu FR),
 
 ## Install (1 commande)
 
+### Mac / Linux
+
 ```bash
 curl -sSL https://raw.githubusercontent.com/ecompabgof/anonymize-data/main/install.sh | bash
 ```
 
 Prérequis: `python3`, `git`, Homebrew (Mac) ou `apt`/`dnf` (Linux).
+
+### Windows (PowerShell)
+
+```powershell
+irm https://raw.githubusercontent.com/ecompabgof/anonymize-data/main/install.ps1 | iex
+```
+
+Prérequis: Windows 10+ avec `winget` (App Installer Microsoft Store).
+L'installeur télécharge auto: Python, Git, Tesseract-OCR (UB Mannheim), Ghostscript.
 
 L'installeur fait:
 - Tesseract + ghostscript + poppler via brew/apt
