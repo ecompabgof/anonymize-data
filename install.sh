@@ -5,7 +5,7 @@ set -e
 
 PLUGIN_NAME="anonymize-data"
 PLUGIN_DIR="$HOME/.claude/plugins/$PLUGIN_NAME"
-REPO_URL="${ANONYMIZE_REPO:-https://github.com/pablogoffinet/anonymize-data}"
+REPO_URL="${ANONYMIZE_REPO:-https://github.com/ecompabgof/anonymize-data}"
 
 echo ""
 echo "  Claude Code Plugin: anonymize-data v2.0"
