@@ -1,122 +1,88 @@
 #!/usr/bin/env bash
-# Plugin Claude Code: anonymize-data — install one-shot
-# Usage: bash install.sh
-set -e
+# anonymize-data : installe le moteur local (Python, spaCy, lecteurs de fichiers) dans ~/.anonymize-data/venv.
+# Le plugin Claude Code s'installe à part : /plugin marketplace add ecompabgof/anonymize-data
+#
+#   bash install.sh          moteur seul
+#   bash install.sh --ocr    moteur + Tesseract pour les PDF scannés et les photos (Homebrew ou apt)
+set -euo pipefail
 
-PLUGIN_NAME="anonymize-data"
-PLUGIN_DIR="$HOME/.claude/plugins/$PLUGIN_NAME"
-REPO_URL="${ANONYMIZE_REPO:-https://github.com/ecompabgof/anonymize-data}"
+HOME_DIR="${ANONYMIZE_DATA_HOME:-$HOME/.anonymize-data}"
+VENV="$HOME_DIR/venv"
+RAW="https://raw.githubusercontent.com/ecompabgof/anonymize-data/main"
+SRC="${BASH_SOURCE[0]:-}"
+if [ -n "$SRC" ] && [ -f "$SRC" ]; then DIR="$(cd "$(dirname "$SRC")" && pwd)"; else DIR=""; fi  # empty when piped
+MODEL="https://github.com/explosion/spacy-models/releases/download/fr_core_news_md-3.8.0/fr_core_news_md-3.8.0-py3-none-any.whl"
+OCR=0
+[ "${1:-}" = "--ocr" ] && OCR=1
 
-echo ""
-echo "  Claude Code Plugin: anonymize-data v2.0"
-echo "  Anonymisation locale RGPD (PDF/Image/XLSX/CSV/DOCX/PPTX/TXT)"
-echo ""
+say() { printf '  %s\n' "$*"; }
 
-# 1. Detect OS
-OS="unknown"
-case "$(uname -s)" in
-  Darwin) OS="mac" ;;
-  Linux)  OS="linux" ;;
-  *) echo "OS non supporté: $(uname -s)"; exit 1 ;;
-esac
-echo "  OS detecté: $OS"
+echo
+say "anonymize-data : installation du moteur local"
+echo
 
-# 2. Check prerequisites
-need_cmd() {
-  command -v "$1" >/dev/null 2>&1 || { echo "  Manque: $1"; return 1; }
-}
+command -v python3 >/dev/null || { say "python3 manquant. Mac : installe-le avec 'brew install python'."; exit 1; }
+python3 - <<'PY' || { say "Python 3.9 ou plus récent est nécessaire."; exit 1; }
+import sys; sys.exit(0 if sys.version_info >= (3, 9) else 1)
+PY
 
-echo ""
-echo "  Vérification prérequis..."
-MISSING=""
-need_cmd python3 || MISSING="$MISSING python3"
-need_cmd git || MISSING="$MISSING git"
-
-if [ "$OS" = "mac" ]; then
-  need_cmd brew || MISSING="$MISSING brew"
-fi
-
-if [ -n "$MISSING" ]; then
-  echo ""
-  echo "  Installe d'abord:$MISSING"
-  echo "  Mac: https://brew.sh — install Homebrew puis 'brew install python git'"
-  exit 1
-fi
-
-# 3. Install system deps
-echo ""
-echo "  Installation outils système (tesseract, ghostscript, poppler)..."
-if [ "$OS" = "mac" ]; then
-  brew install tesseract tesseract-lang ghostscript poppler 2>&1 | grep -v "already installed" | tail -5 || true
-elif [ "$OS" = "linux" ]; then
-  if command -v apt-get >/dev/null; then
-    sudo apt-get update -qq
-    sudo apt-get install -y tesseract-ocr tesseract-ocr-fra ghostscript poppler-utils
-  elif command -v dnf >/dev/null; then
-    sudo dnf install -y tesseract tesseract-langpack-fra ghostscript poppler-utils
+if [ "$OCR" = 1 ]; then
+  say "Installation de Tesseract (OCR)..."
+  if command -v brew >/dev/null; then
+    brew install tesseract tesseract-lang
+  elif command -v apt-get >/dev/null; then
+    sudo apt-get update -qq && sudo apt-get install -y tesseract-ocr tesseract-ocr-fra
+  else
+    say "Ni Homebrew ni apt : installe Tesseract à la main, puis relance."
   fi
 fi
 
-# 4. Clone or update plugin
-echo ""
-echo "  Récupération plugin..."
-if [ -d "$PLUGIN_DIR" ]; then
-  echo "  Déjà présent: $PLUGIN_DIR (skip clone)"
+mkdir -p "$HOME_DIR"
+chmod 700 "$HOME_DIR"
+if [ ! -x "$VENV/bin/python" ]; then
+  say "Création de l'environnement Python dans $VENV"
+  python3 -m venv "$VENV"
+fi
+"$VENV/bin/python" -m pip install --quiet --upgrade pip
+
+REQ="${DIR:+$DIR/requirements.txt}"
+if [ -z "$REQ" ] || [ ! -f "$REQ" ]; then
+  REQ="$HOME_DIR/requirements.txt"
+  curl -fsSL "$RAW/requirements.txt" -o "$REQ"
+fi
+say "Installation des bibliothèques (quelques minutes la première fois)..."
+"$VENV/bin/python" -m pip install --quiet -r "$REQ"
+"$VENV/bin/python" -m pip install --quiet "$MODEL"
+"$VENV/bin/python" -m pip install --quiet "pillow-heif>=0.16" 2>/dev/null || say "Photos HEIC non prises en charge sur ce poste (facultatif)."
+
+say "Vérification sur un exemple fictif..."
+TMP="$(mktemp -d)"
+trap 'rm -rf "$TMP"' EXIT
+printf 'Salarié : DUPONT Jean, IBAN FR76 3000 6000 0112 3456 7890 189.\n' > "$TMP/essai.txt"
+if [ -n "$DIR" ] && [ -f "$DIR/anonymizer/cli.py" ]; then
+  CLI="$DIR/anonymizer/cli.py"
 else
-  mkdir -p "$HOME/.claude/plugins"
-  # Try git clone, fallback to local copy if running from existing dir
-  if git clone "$REPO_URL" "$PLUGIN_DIR" 2>/dev/null; then
-    echo "  Cloné depuis $REPO_URL"
+  CLI=""
+fi
+if [ -n "$CLI" ]; then
+  ANONYMIZE_DATA_HOME="$TMP/reg" "$VENV/bin/python" "$CLI" "$TMP/essai.txt" --sortie "$TMP/out" >/dev/null || true
+  OUT="$(cat "$TMP"/out/*.md 2>/dev/null || true)"
+  if printf '%s' "$OUT" | grep -q '\[PERSONNE_1\]' && ! printf '%s' "$OUT" | grep -q 'DUPONT\|FR76'; then
+    say "Test OK."
   else
-    echo "  Repo distant indisponible. Pour install local, place les fichiers dans $PLUGIN_DIR"
+    say "Test KO : le moteur n'a pas masqué l'exemple. Ne t'en sers pas avant d'avoir corrigé."
     exit 1
   fi
-fi
-
-# 5. Create venv + install python deps
-echo ""
-echo "  Création venv Python..."
-python3 -m venv "$PLUGIN_DIR/.venv"
-VENV_PY="$PLUGIN_DIR/.venv/bin/python"
-VENV_PIP="$PLUGIN_DIR/.venv/bin/pip"
-
-echo "  Installation dépendances Python (peut prendre 3-5min)..."
-"$VENV_PIP" install --upgrade pip --quiet
-"$VENV_PIP" install --quiet -r "$PLUGIN_DIR/requirements.txt"
-
-# 6. spaCy models (bypass uv intercept via direct URL)
-echo ""
-echo "  Téléchargement modèles spaCy fr+en..."
-"$VENV_PIP" install --quiet \
-  https://github.com/explosion/spacy-models/releases/download/fr_core_news_md-3.8.0/fr_core_news_md-3.8.0-py3-none-any.whl \
-  https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-3.8.0/en_core_web_sm-3.8.0-py3-none-any.whl
-
-# 7. Permissions
-chmod +x "$PLUGIN_DIR/hooks/pre-prompt.sh"
-
-# 8. Smoke test
-echo ""
-echo "  Test rapide..."
-echo "Madame Jean DUPONT, 14 rue de la Paix, 75001 Paris. Tel: 06 12 34 56 78. NIR: 1 85 04 75 116 001 42" > /tmp/anonymize_smoke.txt
-RESULT=$("$VENV_PY" "$PLUGIN_DIR/scripts/anonymize.py" /tmp/anonymize_smoke.txt 2>&1 || echo "FAIL")
-rm -f /tmp/anonymize_smoke.txt
-
-if echo "$RESULT" | grep -q "\[CIVILITE\]\|\[NOM\]"; then
-  echo "  Test OK: $RESULT"
 else
-  echo "  Test KO. Résultat: $RESULT"
-  echo "  Vérifie install et relance."
-  exit 1
+  "$VENV/bin/python" -c "import spacy; spacy.load('fr_core_news_md')" && say "Bibliothèques OK."
 fi
 
-# 9. Done
-echo ""
-echo "  ✓ Installation réussie"
-echo ""
-echo "  Usage dans Claude Code:"
-echo "    @fiche_paye.pdf analyse ce salaire"
-echo "    @journal.xlsx fais total"
-echo "    @photo.jpg lis cette photo"
-echo ""
-echo "  IMPORTANT: redémarre Claude Code (Cmd+Q puis relance) pour charger le plugin."
-echo ""
+if ! command -v tesseract >/dev/null; then
+  say "OCR absent : les PDF scannés et les photos seront refusés. Pour l'ajouter : bash install.sh --ocr"
+fi
+echo
+say "Moteur installé. Dans Claude Code :"
+say "  /plugin marketplace add ecompabgof/anonymize-data"
+say "  /plugin install anonymize-data@anonymize-data"
+say "Active le plugin seulement dans les dossiers qui contiennent des documents clients."
+echo

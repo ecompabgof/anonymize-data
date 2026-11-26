@@ -1,0 +1,12 @@
+{
+  "name": "anonymize-data",
+  "description": "Pseudonymisation locale des documents clients pour Claude Code",
+  "owner": { "name": "Pablo Goffinet" },
+  "plugins": [
+    {
+      "name": "anonymize-data",
+      "source": "./",
+      "description": "Pseudonymise en local les documents clients et empêche Claude Code de lire les originaux."
+    }
+  ]
+}
