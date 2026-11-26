@@ -1,0 +1,22 @@
+# Common first names in France (hand-curated list, used to spot person names in uppercase bank lines).
+# One per line, accents optional. Add names here to improve recall.
+Aaron Abdel Abdelkader Abdallah Abdel-Kader Abdoulaye Abel Adam Adel Adele Adeline Adrien Agathe Agnes Ahmed Aicha Aida Alain Alan Alba Albert Albane Alberto Alexandra Alexandre Alexia Alexis Alfred Ali Alice Alicia Aline Alix Amandine Amaury Ambroise Amel Amelie Amine Amir Amina Anais Anastasia Andre Andrea Angela Angele Angelique Anissa Anna Annabelle Anne Anne-Marie Anne-Sophie Annick Annie Anthony Antoine Antoinette Antonin Antonio Apolline Arielle Armand Arnaud Arthur Astrid Aude Audrey Augustin Aurelie Aurelien Aurore Axel Axelle Aya Aymeric Aziz
+Baptiste Barbara Bastien Beatrice Benedicte Benjamin Benoit Bernadette Bernard Bertrand Blanche Blandine Boris Brahim Brandon Brice Brigitte Bruno
+Camille Capucine Carine Carla Carole Caroline Cassandra Catherine Cecile Cedric Celia Celine Charles Charlotte Chantal Chloe Christelle Christian Christiane Christine Christophe Claire Clara Claude Claudine Clemence Clement Cloe Coline Colette Coralie Corentin Corinne Cyril Cyrielle
+Damien Dan Daniel Danielle Danny David Delphine Denis Denise Didier Dimitri Djamel Dominique Dorian Driss Dylan
+Eddy Edgar Edith Edouard Eleonore Elias Elie Eliane Elisa Elisabeth Elise Ella Elodie Eloise Elsa Emeline Emilie Emile Emilien Emma Emmanuel Emmanuelle Enzo Eric Erwan Esteban Estelle Ethan Etienne Eugenie Eva Evan Eve Evelyne
+Fabien Fabienne Fabrice Fadila Farid Farida Fatima Fatoumata Fatou Felix Fernand Fernando Florence Florent Florian Francine Francis Franck Francois Francoise Frederic Frederique
+Gabin Gabriel Gabrielle Gael Gaelle Gaetan Gaspard Gauthier Genevieve Georges Gerald Gerard Geraldine Ghislaine Gilbert Gilles Gisele Grégoire Gregoire Gregory Guillaume Guy Guylaine
+Hamid Hakim Hassan Hector Helene Henri Herve Hocine Honore Hubert Hugo Hugues
+Ibrahim Ibrahima Ilan Ilyes Ines Ingrid Irene Isaac Isabelle Ismael Ivan
+Jacqueline Jacques Jade Jamal Jean Jean-Baptiste Jean-Charles Jean-Claude Jean-Francois Jean-Jacques Jean-Louis Jean-Luc Jean-Marc Jean-Marie Jean-Michel Jean-Paul Jean-Philippe Jean-Pierre Jeanne Jennifer Jeremie Jeremy Jerome Jessica Joachim Joel Johan Johanna John Jonathan Jordan Joseph Josephine Josette Josiane Jules Julia Julie Julien Juliette Justin Justine
+Kader Kamel Karim Karima Karine Kassandra Kelly Kenza Kevin Khadija Khaled Killian Kylian
+Laetitia Lamine Lara Laura Laure Laurence Laurent Lea Leila Lena Leo Leon Leonard Leonie Lilian Liliane Lina Lisa Lise Loic Lola Lorenzo Louis Louise Luc Luca Lucas Lucie Lucien Lucile Ludivine Ludovic Lydia Lydie
+Madeleine Magali Malik Manon Manuel Marc Marceau Marcel Marcelle Margaux Margot Maria Marianne Marie Marie-Christine Marie-Claude Marie-France Marie-Pierre Marina Marine Mario Marion Marius Marjorie Marlene Martial Martin Martine Mathias Mathieu Mathilde Matteo Matthieu Maud Maurice Maxence Maxime Maximilien Medhi Mehdi Melanie Melissa Melodie Michael Michel Micheline Michele Mickael Mila Milan Mireille Mohamed Mohammed Monique Morgane Mounir Mourad Muriel Myriam
+Nabil Nadia Nadine Nathalie Nathan Nicolas Nicole Nina Noah Noel Noemie Nora Norbert
+Octave Odile Olivia Olivier Omar Oscar Oumar
+Pascal Pascale Patrice Patricia Patrick Paul Paula Pauline Perrine Philippe Pierre Pierre-Yves Quentin
+Rachel Rachid Rafael Raphael Raphaelle Raymond Rebecca Regine Regis Remi Remy Renaud Rene Richard Robert Robin Rodolphe Rodrigue Roger Roland Romain Romane Romy Rose Roxane Ruben
+Sabine Sabrina Sacha Salim Salome Samia Samir Samira Samuel Sandra Sandrine Sara Sarah Sebastien Serge Severine Simon Simone Sofia Sofiane Solene Sonia Sophie Stephane Stephanie Steven Suzanne Sylvain Sylvie
+Tanguy Tatiana Theo Theodore Therese Thibault Thibaut Thierry Thomas Timothee Tom Tony Tristan
+Valentin Valentine Valerie Vanessa Veronique Victor Victoria Vincent Violaine Virginie Vivien Viviane Wassim William Xavier Yacine Yanis Yann Yannick Yasmine Yassine Youssef Yves Yvette Yvonne Zakaria Zinedine Zoe

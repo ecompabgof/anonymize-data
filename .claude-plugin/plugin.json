@@ -1,0 +1,10 @@
+{
+  "name": "anonymize-data",
+  "version": "3.0.0",
+  "description": "Pseudonymise en local les documents clients (PDF, images, Word, PowerPoint, Excel, CSV) et empêche Claude Code de lire les originaux.",
+  "author": { "name": "Pablo Goffinet" },
+  "homepage": "https://github.com/ecompabgof/anonymize-data",
+  "repository": "https://github.com/ecompabgof/anonymize-data",
+  "license": "MIT",
+  "keywords": ["rgpd", "pseudonymisation", "anonymisation", "expert-comptable", "confidentialite"]
+}

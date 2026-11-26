@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+# Write pseudonymised copies of client files (runs locally, sends nothing).
+ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+PY="${ANONYMIZE_DATA_PYTHON:-${ANONYMIZE_DATA_HOME:-$HOME/.anonymize-data}/venv/bin/python}"
+if [ ! -x "$PY" ]; then
+  echo "anonymize-data : moteur non installé. Lance : bash \"$ROOT/install.sh\"" >&2
+  exit 3
+fi
+exec "$PY" "$ROOT/anonymizer/cli.py" "$@"
