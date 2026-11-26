@@ -19,13 +19,13 @@ Essai du 26/11/2026 avec Claude Code 2.1.319, sur un relevé fictif contenant un
 | `cat clients/releve.csv` par Claude, mode sans permission | Lu | Refusé |
 | « Donne le total et dis qui a payé », mode sans permission | | Lecture refusée, Claude anonymise, calcule sur la copie, le nom reste masqué |
 | `/anonymize-data:anonymiser clients/`, mode par défaut | | Copie créée, aucun nom ni IBAN témoin dedans |
-| Installation publique sur un poste vierge (configuration isolée) : `curl` du moteur, puis plugin depuis la marketplace GitHub, puis message avec `@clients/releve.csv` | | Moteur et plugin 3.0.0 installés, message bloqué, copie créée, aucun témoin |
+| Installation publique dans une configuration neuve et isolée, sur Mac : `curl` du moteur, puis plugin depuis la marketplace GitHub, puis message avec `@clients/releve.csv` | | Moteur et plugin 3.0.0 installés, message bloqué, copie créée, aucun témoin |
 
 Et 38 tests automatiques, dont tous les cas qui fuyaient dans la version 2 de ce plugin (noms en majuscules dans les libellés bancaires, sociétés, SIREN, téléphone, numéro de sécu saisi comme un nombre, cellules courtes).
 
 ## Installation
 
-Mac ou Linux, Python 3.9 ou plus récent.
+Testé sur Mac. Linux est prévu mais pas encore testé. Python 3.9 ou plus récent.
 
 1. Le moteur local (spaCy et les lecteurs de fichiers, dans `~/.anonymize-data`) :
 
@@ -124,7 +124,7 @@ Un nom repéré une fois est masqué partout ailleurs dans les fichiers traités
 - Un dossier trop gros pour être vérifié à temps (plus de 5 000 fichiers ou 20 secondes) est refusé en entier, pour la recherche comme pour les commandes : vise un sous-dossier.
 - Un message bloqué reste dans l'historique local de Claude Code, sur ton poste.
 - La liste des prénoms (`anonymizer/data/first_names.txt`) est faite à la main : environ 550 prénoms courants en France. Ajoute ceux qui manquent.
-- Windows n'est pas pris en charge pour l'instant : pas d'installeur, rien de testé.
+- Testé seulement sur Mac. Linux n'est pas encore testé. Windows n'est pas pris en charge pour l'instant : pas d'installeur, rien de testé.
 
 ## Tests
 
